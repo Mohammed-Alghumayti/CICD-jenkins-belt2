@@ -12,8 +12,8 @@ pipeline {
         AWS_EB_APP_VERSION = "${BUILD_ID}"
         AWS_EB_ENVIRONMENT = "Mohammedeidbelt2-env"
 
-        SONAR_IP = "54.226.50.200"
-        SONAR_TOKEN = "sqp_aa3cba40e3342d9cff9044e498766a66cf8cc0cc"
+        SONAR_IP = "52.23.193.18"
+        SONAR_TOKEN = "sqp_1def002a3fed026f71ce94c190c8ceb21f8950af"
 
     }
 
@@ -53,8 +53,10 @@ pipeline {
         stage('Quality Scan'){
             steps {
                 sh '''
-                sudo docker run -d --name sonarqube -p 80:9000 -v sonarqube_data:/opt/sonarqube/data -v 
-                sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs sonarqube
+                mvn clean verify sonar:sonar \
+                    -Dsonar.projectKey=online-MohammedEid-B2D2 \
+                    -Dsonar.host.url=http://$SONAR_IP \
+                    -Dsonar.login=$SONAR_TOKEN
                 '''
             }
         }
@@ -68,7 +70,7 @@ pipeline {
 
             post {
                 success {
-                    archiveArtifacts artifacts: '/target/.jar', followSymlinks: false
+                    archiveArtifacts artifacts: '**/target/**.jar', followSymlinks: false
 
                 
                 }
