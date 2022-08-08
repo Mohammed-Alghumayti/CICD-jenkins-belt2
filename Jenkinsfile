@@ -53,10 +53,8 @@ pipeline {
         stage('Quality Scan'){
             steps {
                 sh '''
-                mvn clean verify sonar:sonar \
-                    -Dsonar.projectKey=Online-cohort-project \
-                    -Dsonar.host.url=http://$SONAR_IP \
-                    -Dsonar.login=$SONAR_TOKEN
+                sudo docker run -d --name sonarqube -p 80:9000 -v sonarqube_data:/opt/sonarqube/data -v 
+                sonarqube_extensions:/opt/sonarqube/extensions -v sonarqube_logs:/opt/sonarqube/logs sonarqube
                 '''
             }
         }
