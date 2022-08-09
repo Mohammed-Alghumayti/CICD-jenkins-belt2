@@ -21,7 +21,7 @@ pipeline {
         stage('Validate') {
             steps {
                 
-                sh "mvn vaidate"
+                sh "mvn validate"
 
                 sh "mvn clean"
 
@@ -45,7 +45,7 @@ pipeline {
 
             post {
                 always {
-                    junit '*/target/surefire-reports/TEST-*.xml'
+                    junit '**/target/surefire-reports/TEST-*.xml'
                 }
             }
         }
