@@ -21,7 +21,7 @@ pipeline {
         stage('Validate') {
             steps {
                 
-                sh "mvn validate"
+                sh "mvn vaidate"
 
                 sh "mvn clean"
 
